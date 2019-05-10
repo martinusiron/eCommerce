@@ -1,12 +1,11 @@
 <template>
     <div class="bg">
         <nav>
-            <ol class="cd-breadcrumb">
-                <li><a href="#0">Home</a></li>
-                <li><a href="#0">Gallery</a></li>
-                <li><a href="#0">Web</a></li>
-                <li class="current"><em>Project</em></li>
-            </ol>
+            <ul class="breadcrumb">
+                <li><router-link to="/delivery">Delivery</router-link></li>
+                <li><router-link to="/payment">Payment</router-link></li>
+                <li><router-link to="/finish">Finish</router-link></li>
+            </ul>
         </nav>
         <div class="row">
             <div class="col-60">

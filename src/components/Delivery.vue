@@ -1,9 +1,9 @@
 <template>
     <div class="bg">
         <ul class="breadcrumb">
-            <li><a href="#">Delivery</a></li>
-            <li><a href="#">Payment</a></li>
-            <li><a href="#">Finish</a></li>
+            <li><router-link to="/delivery">Delivery</router-link></li>
+            <li><router-link to="/payment">Payment</router-link></li>
+            <li><router-link to="/finish">Finish</router-link></li>
         </ul>
         <div class="row">
             <div class="col-75">
