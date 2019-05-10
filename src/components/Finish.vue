@@ -17,13 +17,20 @@
             </div>
             <div class="col-25">
                 <div class="container summary__box">
-                    <h4>Summary <span></span></h4>
-                    <h6>10 items purchased</h6>
+                    <h4>Summary</h4>
+                    <h6>{{data_user.quantity}} items purchased</h6>
+                    <hr />
+                    <h5>Delivery estimation</h5>
+                    <h5 style="color:#1BD97B;">{{data_user.delivery_estimate}}</h5>
+                    <hr />
+                    <h5>Payment Method</h5>
+                    <h5 style="color:#1BD97B;">{{data_user.payment_method}}</h5>
                     <div class="detail-price">
-                        <h6>Cost of goods <span class="price">$15</span></h6>
-                        <h6>Dropshipping Fee<span class="price">$5</span></h6>
-                        <h4>Total <span class="price">$20</span></h4>
-                        <input type="submit" value="Continue to Payment" class="btn">
+                        <h6>Cost of goods <span class="price">{{data_user.cost_of_goods}}</span></h6>
+                        <h6>Dropshipping Fee<span class="price">{{data_user.dropshipping_fee}}</span></h6>
+                        <h6>{{data_user.shipment_type}} shipment<span class="price">{{data_user.shipment_cost}}</span></h6>
+                        <h4>Total <span class="price price--total">{{data_user.total}}</span></h4>
+                        <button type="submit" class="btn btn--checkout" @click="finish()">Pay with {{data_user.payment_method}} </button>
                     </div>
                 </div>
             </div>
@@ -32,10 +39,19 @@
 </template>
 <script>
 export default {
-  name: 'Delivery',
+  name: 'Finish',
   data () {
     return {
     }
+  },
+  methods: {
+    getData(){
+        this.data_user = JSON.parse(localStorage.getItem('data_user'));
+    },
+  },
+  mounted(){
+      this.getData();
   }
+  
 }
 </script>

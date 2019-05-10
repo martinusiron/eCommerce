@@ -3,15 +3,16 @@ import Router from 'vue-router'
 import Delivery from '@/components/Delivery'
 import Payment from '@/components/Payment'
 import Finish from '@/components/Finish'
+import Cart from '@/components/Cart'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Delivery',
-      component: Delivery
+      name: 'Cart',
+      component: Cart
     }, 
     {
       path: '/delivery',
@@ -30,3 +31,4 @@ export default new Router({
     }
   ]
 })
+export default router
