@@ -2,80 +2,91 @@
     <div class="bg">
         <nav>
             <ul class="breadcrumb">
-                <li><router-link to="/delivery">Delivery</router-link></li>
-                <li><router-link to="/payment">Payment</router-link></li>
-                <li><router-link to="/finish">Finish</router-link></li>
+                <li><span class="current--menu">1</span>Delivery</li>
+                <li><span class="current--menu">2</span>Payment</li>
+                <li><span>3</span>Finish</li>
             </ul>
         </nav>
         <div class="row">
             <div class="col-75">
-                <div class="container" @click="backPage">
-                    <span class="back"></span> Back to delivery
-                </div>
+                <router-link to="/delivery">
+                    <div class="container">
+                        <span class="back"></span> Back to delivery
+                    </div>
+                </router-link>
             </div>
         </div>
-        <div class="row">
-            <div class="col-75">
-                <div class="container">
-                    <form>
-                        <div class="row">
-                            <div class="col-50">
-                                <h3>Shipment</h3>
+        <form id="form-payment" role="form">
+            <div class="row">
+                <div class="col-75">
+                    <div class="container">
+                        <form>
+                            <div class="row">
+                                <div class="col-50">
+                                    <h3>Shipment</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <ul class="shipment-payment">
-                                <li 
-                                    v-for="(shipment, index) in shipments" 
-                                    :class="{ 'active':activeIndexShipment === index }"
-                                    :key="shipment.id"
-                                    @click="setActiveShipment(shipment, index)"
-                                >
-                                    {{shipment.shipment_type}} <br/>
-                                    {{shipment.shipment_price}}
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="row">
-                            <div class="col-50">
-                                <h3>Payment</h3>
+                            <div class="row">
+                                <ul class="shipment-payment">
+                                    <li 
+                                        v-for="(shipment, index) in shipments" 
+                                        :class="{ 'active':activeIndexShipment === index }"
+                                        :key="shipment.id"
+                                        @click="setActiveShipment(shipment, index)"
+                                    >
+                                        {{shipment.shipment_type}} <br/>
+                                        {{shipment.shipment_price}}
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="row">
-                            <ul class="shipment-payment">
-                                <li 
-                                    v-for="(payment, index) in payments"
-                                    :class="{ 'active':activeIndexPayment === index }"
-                                    :key="payment.id"
-                                    @click="setActivePayment(payment, index)"
-                                >
-                                    {{payment.payment_type}}
-                                </li>
-                            </ul>
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="col-50">
+                                    <h3>Payment</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <ul class="shipment-payment">
+                                    <li 
+                                        v-for="(payment, index) in payments"
+                                        :class="{ 'active':activeIndexPayment === index }"
+                                        :key="payment.id"
+                                        @click="setActivePayment(payment, index)"
+                                    >
+                                        {{payment.payment_type}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="col-25">
-                <div class="container summary__box">
-                    <h4>Summary</h4>
-                    <h6>{{data_user.quantity}} items purchased</h6>
-                    <hr />
-                    <h5>Delivery estimation</h5>
-                    <h5 style="color:#1BD97B;">{{delivery_estimate}}</h5>
-                    <hr />
-                    <h5>Payment Method</h5>
-                    <h5 style="color:#1BD97B;">{{payment_method}}</h5>
-                    <div class="detail-price">
-                        <h6>Cost of goods <span class="price">{{data_user.cost_of_goods}}</span></h6>
-                        <h6>Dropshipping Fee<span class="price">{{data_user.dropshipping_fee}}</span></h6>
-                        <h6>{{shipment_type}} shipment<span class="price">{{shipment_cost}}</span></h6>
-                        <h4>Total <span class="price price--total">{{totalPrice}}</span></h4>
-                        <button type="submit" class="btn btn--checkout" @click="finish()">Pay with {{payment_method}} </button>
+                <div class="col-25">
+                    <div class="container summary__box">
+                        <h4>Summary</h4>
+                        <h6>{{data_user.quantity}} items purchased</h6>
+                        <hr />
+                        <h5>Delivery estimation</h5>
+                        <h5 style="color:#1BD97B;">{{delivery_estimate}}</h5>
+                        <hr />
+                        <h5>Payment Method</h5>
+                        <h5 style="color:#1BD97B;">{{payment_method}}</h5>
+                        <div class="detail-price">
+                            <h6>Cost of goods <span class="price price--font">{{data_user.cost_of_goods}}</span></h6>
+                            <h6>Dropshipping Fee<span class="price price--font">{{data_user.dropshipping_fee}}</span></h6>
+                            <h6>{{shipment_type}} shipment<span class="price price--font">{{shipment_cost}}</span></h6>
+                            <h4>Total <span class="price price--total">{{totalPrice}}</span></h4>
+                            <input type="hidden" v-model="shipment_type" />
+                            <input type="hidden" v-model="payment_method" />
+                            <span v-if="errors.length">
+                                <h5 v-for="error in errors">
+                                    {{ error }} <br />
+                                </h5>
+                            </span>
+                            <button type="submit" class="btn btn--checkout" @click="finish()">Pay with {{payment_method}} </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 <script>
@@ -100,8 +111,9 @@ export default {
         },
         delivery_estimate: "",
         shipment_cost: 0,
-        shipment_type: "",
-        payment_method: ""
+        shipment_type: null,
+        payment_method: null,
+        errors: []
     }
   },
   methods: {
@@ -118,21 +130,30 @@ export default {
         getData(){
             this.data_user = JSON.parse(localStorage.getItem('data_user'));
         },
-        backPage(){
-          this.$router.push({name: 'Delivery'});
-        },
         finish(){
             let vm = this;
-            if(vm.delivery_estimate == "" || vm.payment_method == ""){
-                alert("Please choose shipment");
-            }
-
-            vm.data_user.delivery_estimate = vm.delivery_estimate;
-            vm.data_user.shipment_cost = vm.shipment_cost;
-            vm.data_user.shipment_type = vm.shipment_type;
-            vm.payment_method = vm.payment_method;
-            localStorage.removeItem("data_user");
-            // localStorage.setItem("data_user", JSON.stringify(vm.data));
+            $("#form-payment").submit(function(e){
+                vm.errors = [];
+                if(vm.shipment_type && vm.payment_method){
+                    vm.data_user.delivery_estimate = vm.delivery_estimate;
+                    vm.data_user.shipment_cost = vm.shipment_cost;
+                    vm.data_user.shipment_type = vm.shipment_type;
+                    vm.data_user.payment_method = vm.payment_method;
+                    localStorage.setItem("data_user", JSON.stringify(vm.data_user));
+                    vm.$router.push({name: "Finish"})
+                    // localStorage.removeItem("data_user");
+                    // localStorage.setItem("data_user", JSON.stringify(vm.data));
+                }
+                else{
+                    if(!vm.shipment_type)
+                        vm.errors.push("Pilih Shipment");
+                    if(!vm.payment_method)
+                        vm.errors.push("Pilih Payment");
+                    return false;
+                }
+                e.preventDefault();
+                
+            });
         }
     },
     computed:{
