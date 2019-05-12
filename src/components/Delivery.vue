@@ -9,7 +9,9 @@
             <div class="col-75">
                 <router-link to="/">
                     <div class="container">
-                        <span class="back"></span> Back to chart
+                        <h6 class="back--home">
+                            <span class="back"></span> Back to cart
+                        </h6>
                     </div>
                 </router-link>
             </div>
@@ -32,7 +34,8 @@
                             <div class="col-50">
                                 <input type="email" v-model="data.email" placeholder="Email" required />
                                 <input type="text" v-model="data.phone_number" placeholder="Phone Number" maxlength="20" minlength="6" class="phone_number" v-on:keydown="checkPhone" required />
-                                <input type="text" v-model="data.address" placeholder="Delivery Address" :maxlength="max" required />
+                                <textarea v-model="data.address" placeholder="Delivery Address... (limited to 120 characters)" :maxlength="max" required></textarea>
+                                <h6 class="remaining"><span>Remaining characters: {{(max - data.address.length)}}</span></h6>
                             </div>
 
                             <div class="col-50">
@@ -47,9 +50,9 @@
                         <h4>Summary <span></span></h4>
                         <h6>{{data.quantity}} items purchased</h6>
                         <div class="detail-price">
-                            <h6>Cost of goods <span class="price price--font">{{data.cost_of_goods}}</span></h6>
-                            <h6>Dropshipping Fee<span class="price price--font">{{dropshippingFee}}</span></h6>
-                            <h4>Total <span class="price price--total">{{totalPrice}}</span></h4>
+                            <h6>Cost of goods <span class="price price--font">{{formatPrice(data.cost_of_goods)}}</span></h6>
+                            <h6>Dropshipping Fee<span class="price price--font">{{formatPrice(dropshippingFee)}}</span></h6>
+                            <h4>Total <span class="price price--total">{{formatPrice(totalPrice)}}</span></h4>
                             <button type="submit" @click="continueToPayment()" class="btn btn--checkout">Continue to Payment</button>
                         </div>
                     </div>
@@ -107,6 +110,10 @@ export default {
                 localStorage.setItem("data_user", JSON.stringify(vm.data));
                 vm.$router.push({name: 'Payment'});
           });
+      },
+      formatPrice(value) {
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
       }
   },
   computed: {

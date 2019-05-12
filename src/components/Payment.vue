@@ -11,7 +11,9 @@
             <div class="col-75">
                 <router-link to="/delivery">
                     <div class="container">
-                        <span class="back"></span> Back to delivery
+                        <h6 class="back--home">
+                            <span class="back"></span> Back to delivery
+                        </h6>
                     </div>
                 </router-link>
             </div>
@@ -70,15 +72,15 @@
                         <h5>Payment Method</h5>
                         <h5 style="color:#1BD97B;">{{payment_method}}</h5>
                         <div class="detail-price">
-                            <h6>Cost of goods <span class="price price--font">{{data_user.cost_of_goods}}</span></h6>
-                            <h6>Dropshipping Fee<span class="price price--font">{{data_user.dropshipping_fee}}</span></h6>
-                            <h6>{{shipment_type}} shipment<span class="price price--font">{{shipment_cost}}</span></h6>
-                            <h4>Total <span class="price price--total">{{totalPrice}}</span></h4>
+                            <h6>Cost of goods <span class="price price--font">{{formatPrice(data_user.cost_of_goods)}}</span></h6>
+                            <h6>Dropshipping Fee<span class="price price--font">{{formatPrice(data_user.dropshipping_fee)}}</span></h6>
+                            <h6>{{shipment_type}} shipment<span class="price price--font">{{formatPrice(shipment_cost)}}</span></h6>
+                            <h4>Total <span class="price price--total">{{formatPrice(totalPrice)}}</span></h4>
                             <input type="hidden" v-model="shipment_type" />
                             <input type="hidden" v-model="payment_method" />
                             <span v-if="errors.length">
                                 <h5 v-for="error in errors">
-                                    {{ error }} <br />
+                                    <span class="error">{{ error }} <br /></span>
                                 </h5>
                             </span>
                             <button type="submit" class="btn btn--checkout" @click="finish()">Pay with {{payment_method}} </button>
@@ -146,14 +148,18 @@ export default {
                 }
                 else{
                     if(!vm.shipment_type)
-                        vm.errors.push("Pilih Shipment");
+                        vm.errors.push("Choose Shipment");
                     if(!vm.payment_method)
-                        vm.errors.push("Pilih Payment");
+                        vm.errors.push("Choose Payment");
                     return false;
                 }
                 e.preventDefault();
                 
             });
+        },
+        formatPrice(value) {
+            let val = (value/1).toFixed(0).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
         }
     },
     computed:{

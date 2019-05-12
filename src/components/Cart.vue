@@ -11,6 +11,7 @@
         <form id="form-cart" role="form">
             <div class="row">
                 <div class="cart quantity buttons_added">
+                    <h4>Quantity</h4>
                     <button v-on:click.prevent="decrement" class="minus">-</button>
                     <span class="minus">{{quantity}}</span>
                     <button v-on:click.prevent="increment" class="plus">+</button>
@@ -45,7 +46,21 @@ export default {
               window.localStorage.setItem("quantity", vm.quantity);
               vm.$router.push({name: 'Delivery'});
           })
+      },
+      getData(){
+          let data = JSON.parse(localStorage.getItem('data_user'));
+          let quantity = JSON.parse(localStorage.getItem('quantity'));
+          
+          let keysToRemove = ["data_user", "quantity"];
+          if(data || quantity){
+              for (let index = 0; index < keysToRemove.length; index++) {
+                  localStorage.removeItem(keysToRemove[index]);   
+              }
+          }
       }
+    },
+    mounted(){
+        this.getData();
     }
 
 }

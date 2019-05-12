@@ -127,8 +127,14 @@ a {
     color: #000000;
 }
 
+textarea {
+    font-family: Arial;
+    font-size: 14px;
+}
+
 input[type=text],
-input[type=email] {
+input[type=email],
+textarea {
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
@@ -136,19 +142,17 @@ input[type=email] {
     border-radius: 3px;
 }
 
-input[type=text]:required:valid,
-input[type=email]:required:valid {
-    border: 1px  solid #1BD97B;
-}
-
 input[type=text]:required:focus:valid,
-input[type=email]:required:focus:valid {
+input[type=email]:required:focus:valid,
+textarea:required:valid {
+    border: 1px  solid #1BD97B;
     background: url("../images/check.svg") no-repeat 95% 50%;
     background-size: 20px;
 }
 
 input[type=text]:focus:invalid,
-input[type=email]:focus:invalid  {
+input[type=email]:focus:invalid,
+textarea:focus:invalid {
     background: url("../images//cross.svg") no-repeat 95% 50%;
     background-size: 20px;
 }
@@ -365,6 +369,14 @@ ul.shipment-payment li a:hover {
 .price--font{
     font-weight: 700;
     color: black;
+}
+
+.remaining {
+    margin-top: -20px;
+}
+
+.error {
+    color: red;
 }
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */

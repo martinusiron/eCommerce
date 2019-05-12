@@ -29,10 +29,10 @@
                     <h5>Payment Method</h5>
                     <h5 style="color:#1BD97B;">{{data_user.payment_method}}</h5>
                     <div class="detail-price">
-                        <h6>Cost of goods <span class="price price--font">{{data_user.cost_of_goods}}</span></h6>
-                        <h6>Dropshipping Fee<span class="price price--font">{{data_user.dropshipping_fee}}</span></h6>
-                        <h6>{{data_user.shipment_type}} shipment<span class="price price--font">{{data_user.shipment_cost}}</span></h6>
-                        <h4>Total <span class="price price--total">{{data_user.total}}</span></h4>
+                        <h6>Cost of goods <span class="price price--font">{{formatPrice(data_user.cost_of_goods)}}</span></h6>
+                        <h6>Dropshipping Fee<span class="price price--font">{{formatPrice(data_user.dropshipping_fee)}}</span></h6>
+                        <h6>{{data_user.shipment_type}} shipment<span class="price price--font">{{formatPrice(data_user.shipment_cost)}}</span></h6>
+                        <h4>Total <span class="price price--total">{{formatPrice(data_user.total)}}</span></h4>
                     </div>
                 </div>
             </div>
@@ -60,6 +60,10 @@ export default {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
+    },
+    formatPrice(value) {
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     }
   },
   mounted(){
