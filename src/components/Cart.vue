@@ -48,14 +48,9 @@ export default {
           })
       },
       getData(){
-          let data = JSON.parse(localStorage.getItem('data_user'));
           let quantity = JSON.parse(localStorage.getItem('quantity'));
-          
-          let keysToRemove = ["data_user", "quantity"];
-          if(data || quantity){
-              for (let index = 0; index < keysToRemove.length; index++) {
-                  localStorage.removeItem(keysToRemove[index]);   
-              }
+          if(quantity){
+             this.quantity = quantity; 
           }
       }
     },

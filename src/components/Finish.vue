@@ -12,11 +12,9 @@
                 <h3>Thank you</h3>
                 <h5>Order ID: {{order_id}} </h5>
                 <h5>Your order will be delivered {{data_user.delivery_estimate}}</h5>
-                <router-link to="/">
-                    <h6 class="back--home">
-                        <span class="back"></span> Back to homepage
-                    </h6>
-                </router-link>
+                <h6 class="back--home" @click="backToHome">
+                    <span class="back"></span> Back to homepage
+                </h6>
             </div>
             <div class="col-25">
                 <div class="container summary__box">
@@ -64,6 +62,18 @@ export default {
     formatPrice(value) {
         let val = (value/1).toFixed(0).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
+    backToHome(){
+        let data = JSON.parse(localStorage.getItem('data_user'));
+        let quantity = JSON.parse(localStorage.getItem('quantity'));
+        
+        let keysToRemove = ["data_user", "quantity"];
+        if(data || quantity){
+            for (let index = 0; index < keysToRemove.length; index++) {
+                localStorage.removeItem(keysToRemove[index]);   
+            }
+            this.$router.push({name:"Cart"})
+        }
     }
   },
   mounted(){
