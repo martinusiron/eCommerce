@@ -142,9 +142,7 @@ export default {
                     vm.data_user.shipment_type = vm.shipment_type;
                     vm.data_user.payment_method = vm.payment_method;
                     localStorage.setItem("data_user", JSON.stringify(vm.data_user));
-                    vm.$router.push({name: "Finish"})
-                    // localStorage.removeItem("data_user");
-                    // localStorage.setItem("data_user", JSON.stringify(vm.data));
+                    vm.$router.push({name: "Finish"});
                 }
                 else{
                     if(!vm.shipment_type)

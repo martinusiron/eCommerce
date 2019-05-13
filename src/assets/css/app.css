@@ -144,7 +144,13 @@ textarea {
 
 input[type=text]:required:focus:valid,
 input[type=email]:required:focus:valid,
-textarea:required:valid {
+textarea:required:focus:valid {
+    border: 1px  solid #1BD97B;
+}
+
+input[type=text]:required:focus:valid,
+input[type=email]:required:focus:valid,
+textarea:required:focus:valid {
     border: 1px  solid #1BD97B;
     background: url("../images/check.svg") no-repeat 95% 50%;
     background-size: 20px;
