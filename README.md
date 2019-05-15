@@ -8,6 +8,9 @@
 # install dependencies
 npm install
 
+npm run lint -- --fix (or for yarn: yarn run lint --fix)
+
+
 # serve with hot reload at localhost:8080
 npm run dev
 ```
